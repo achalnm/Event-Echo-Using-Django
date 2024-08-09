@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventEcho</title>
+    {% load static %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'accounts/dashboard.css' %}" rel="stylesheet">
+    <style>
+        .event-box {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">EventEcho</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                <!-- New About Us button -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#about-us">About Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Video Section -->
+    <div class="video-container">
+        <video autoplay loop muted playsinline class="video-background">
+            <source src="{% static 'accounts/vid.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Welcome Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user"></i> Welcome
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Hello, {{ user.username }}!</h4>
+                        <p class="card-text">Welcome to your dashboard. Here you can manage your account and view relevant information.</p>
+                    </div>
+                </div>
+                <!-- Notifications Card -->
+                <div class="card mt-3">
+                    <div class="card-header bg-info">
+                        <i class="fas fa-bell"></i> Notifications
+                    </div>
+                    <div class="card-body">
+                        {% if registered_events %}
+                            <ul class="list-group">
+                                {% for event in registered_events %}
+                                    <li class="list-group-item">{{ event.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>You have not registered for any events yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Events Card -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-success">
+                        <i class="fas fa-calendar-alt"></i> Upcoming Events
+                    </div>
+                    <div class="card-body">
+                        {% if events %}
+                            <div class="row">
+                                {% for event in events %}
+                                <div class="col-md-6 event-box">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ event.name }}</h5>
+                                            <small>{{ event.date }}</small>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{ event.description }}</p>
+                                            <p>Price: ${{ event.price }}</p>
+                                            {% if event.image %}
+                                                <img src="{{ event.image.url }}" alt="{{ event.name }}" style="width: 100%; height: auto;">
+                                            {% endif %}
+                                            <a href="{% url 'event_detail' event.id %}" class="btn btn-primary mt-2">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No upcoming events scheduled.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="reviews-container">
+                    <div class="review-wrapper">
+                        <div class="review-cards">
+                            <!-- Review 1 -->
+                            <a href="https://en.wikipedia.org/wiki/Justin_Bieber" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review1.jpg' %}" alt="Reviewer 1" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Justin Bieber</div>
+                                        <p class="review-text">Singer/Musician</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 2 -->
+                            <a href="https://en.wikipedia.org/wiki/Gangavathi_Pranesh" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review9.jpg' %}" alt="Reviewer 2" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Gangavathi Pranesh</div>
+                                        <p class="review-text">Comedian</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 3 -->
+                            <a href="https://en.wikipedia.org/wiki/Arijit_Singh" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review3.jpg' %}" alt="Reviewer 3" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Arijith Singh</div>
+                                        <p class="review-text">Singer/Performer</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 4 -->
+                            <a href="https://en.wikipedia.org/wiki/Sonu_Nigam" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review4.jpg' %}" alt="Reviewer 4" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Sonu Nigam</div>
+                                        <p class="review-text">Singer/Performer</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 5 -->
+                            <a href="https://en.wikipedia.org/wiki/Rajesh_Krishnan" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review5.jpg' %}" alt="Reviewer 5" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Rajesh Krishnan</div>
+                                        <p class="review-text">Singer</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 6 -->
+                            <a href="https://en.wikipedia.org/wiki/Dua_Lipa" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review6.jpg' %}" alt="Reviewer 6" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Dua Lipa</div>
+                                        <p class="review-text">Singer</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 7 -->
+                            <a href="https://en.wikipedia.org/wiki/Deadpool" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review7.jpg' %}" alt="Reviewer 7" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Deadpool</div>
+                                        <p class="review-text">Marvel Jesus</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Review 8 -->
+                            <a href="https://en.wikipedia.org/wiki/Birju_Maharaj" target="_blank" class="review-link">
+                                <div class="review-card">
+                                    <img src="{% static 'accounts/review8.jpg' %}" alt="Reviewer 8" class="review-img">
+                                    <div class="review-content">
+                                        <div class="review-name">Pandit Birju Maharaj</div>
+                                        <p class="review-text">Dancer, Composer</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Carousel -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="image-carousel">
+                    <div class="carousel-container">
+                        <img src="{% static 'accounts/image7.jpg' %}" alt="Image 1">
+                        <img src="{% static 'accounts/image2.jpg' %}" alt="Image 2">
+                        <img src="{% static 'accounts/image3.jpg' %}" alt="Image 3">
+                        <img src="{% static 'accounts/image4.jpg' %}" alt="Image 4">
+                        <img src="{% static 'accounts/image5.jpg' %}" alt="Image 5">
+                        <img src="{% static 'accounts/image6.jpg' %}" alt="Image 6">
+                        <img src="{% static 'accounts/image8.jpg' %}" alt="Image 7">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="row mt-5" id="about-us">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <i class="fas fa-info-circle"></i> About Us
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">About EventEcho</h5>
+                        <p class="card-text">
+                            EventEcho is your go-to platform for discovering and registering for the most exciting events around you. Whether you're looking for concerts, workshops, or community meetups, EventEcho has it all. Join our community and never miss out on an event again!
+                        </p>
+                        <h5 class="card-title">Contact Us</h5>
+                        <p class="card-text">
+                            Have questions or need support? Reach out to our team at support@eventecho.com or call us at +123456789.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; JIT | All rights reserved | For more information contact +919035283996 | EventEcho@gmail.com</p>
+    <div class="social-icons">
+        <a href="https://www.instagram.com" class="social-icon" target="_blank">
+            <img src="{% static 'accounts/LOG1.png' %}" alt="Instagram">
+        </a>
+        <a href="https://www.linkedin.com" class="social-icon" target="_blank">
+            <img src="{% static 'accounts/LOG2.png' %}" alt="LinkedIn">
+        </a>
+        <a href="https://mail.google.com" class="social-icon" target="_blank">
+            <img src="{% static 'accounts/LOG3.png' %}" alt="Facebook">
+        </a>
+    </div>
+</footer>
+    <!-- Bootstrap JS and other libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'accounts/script.js' %}"></script>
+</body>
+</html>
