@@ -184,7 +184,7 @@ venv\Scripts\activate      # On Windows
 
 <ul>
   <li>Ensure Python and pip are correctly installed and added to your system's PATH.</li>
-  <li>Make sure you're running the correct versions of the dependencies listed in <code>requirements.txt</code>.</li>
+  <li>Make sure you're running the correct versions of the dependencies listed</li>
   <li>If the server fails to start, check the error messages in the terminal and ensure that all migrations have been applied.</li>
 </ul>
 
