@@ -188,8 +188,6 @@ venv\Scripts\activate      # On Windows
   <li>If the server fails to start, check the error messages in the terminal and ensure that all migrations have been applied.</li>
 </ul>
 
-<p>For further assistance, please open an issue on GitHub or contact the development team directly.</p>
-
 <h2 id="contributing">Contributing</h2>
 
 <p>
