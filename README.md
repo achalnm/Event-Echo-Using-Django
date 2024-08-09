@@ -21,6 +21,8 @@
   <li><a href="#architecture-and-design">Architecture and Design</a></li>
   <li><a href="#implementation">Implementation</a></li>
   <li><a href="#testing">Testing</a></li>
+  <li><a href="#setup">Setup</a></li>
+  <li><a href="#troubleshooting">Troubleshooting</a></li>
   <li><a href="#contributing">Contributing</a></li>
 </ul>
 
@@ -107,6 +109,86 @@
   <li><strong>Integration Testing:</strong> To ensure smooth interaction between frontend and backend components.</li>
   <li><strong>User Acceptance Testing (UAT):</strong> To validate the platform against user requirements.</li>
 </ul>
+
+
+<h2 id="setup">Setup and Installation</h2>
+
+<p>Follow these steps to get the EventEcho project running on your local machine:</p>
+
+<h3>Step 1: Clone the Repository</h3>
+
+<pre><code>git clone https://github.com/yourusername/EventEcho.git
+cd EventEcho
+</code></pre>
+
+<h3>Step 2: Set Up a Virtual Environment</h3>
+
+<p>It's a good practice to use a virtual environment to manage dependencies.</p>
+
+<pre><code>python -m venv venv
+source venv/bin/activate   # On macOS/Linux
+venv\Scripts\activate      # On Windows
+</code></pre>
+
+<h3>Step 3: Install Dependencies</h3>
+
+<p>Install the required Python packages using the <code>requirements.txt</code> file.</p>
+
+<pre><code>pip install -r requirements.txt
+</code></pre>
+
+<h3>Step 4: Set Up the Database</h3>
+
+<p>Apply the migrations to set up the database.</p>
+
+<pre><code>python manage.py migrate
+</code></pre>
+
+<h3>Step 5: Create a Superuser</h3>
+
+<p>Create a superuser account to access the Django admin panel.</p>
+
+<pre><code>python manage.py createsuperuser
+</code></pre>
+
+<h3>Step 6: Run the Development Server</h3>
+
+<p>Start the Django development server.</p>
+
+<pre><code>python manage.py runserver
+</code></pre>
+
+<p>You can now access the application by navigating to <a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a> in your web browser.</p>
+
+<h3>Step 7: Access the Admin Panel (Optional)</h3>
+
+<p>If you need to manage events and users, you can access the Django admin panel at:</p>
+
+<pre><code>http://127.0.0.1:8000/admin/
+</code></pre>
+
+<p>Login using the superuser credentials you created in Step 5.</p>
+
+<h3>Step 8: Deactivate the Virtual Environment</h3>
+
+<p>Once you're done, you can deactivate the virtual environment with the following command:</p>
+
+<pre><code>deactivate
+</code></pre>
+
+<p>Your environment is now clean and ready for other projects!</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>If you encounter any issues during installation or while running the project, please check the following:</p>
+
+<ul>
+  <li>Ensure Python and pip are correctly installed and added to your system's PATH.</li>
+  <li>Make sure you're running the correct versions of the dependencies listed in <code>requirements.txt</code>.</li>
+  <li>If the server fails to start, check the error messages in the terminal and ensure that all migrations have been applied.</li>
+</ul>
+
+<p>For further assistance, please open an issue on GitHub or contact the development team directly.</p>
 
 <h2 id="contributing">Contributing</h2>
 
