@@ -176,7 +176,7 @@ venv\Scripts\activate      # On Windows
 <pre><code>deactivate
 </code></pre>
 
-<p>Your environment is now clean and ready for other projects!</p>
+<p>Your environment is now clean and ready for other projects</p>
 
 <h2 id="troubleshooting">Troubleshooting</h2>
 
