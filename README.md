@@ -191,6 +191,6 @@ venv\Scripts\activate      # On Windows
 <h2 id="contributing">Contributing</h2>
 
 <p>
-  Contributions are welcome to enhance the platform. If you have any suggestions, feel free to fork the repository, make your changes, and submit a pull request.
+  Contributions are welcome to enhance the platform. If you have any suggestions, feel free to fork the repository, make your changes, and submit the pull request.
 </p>
 
