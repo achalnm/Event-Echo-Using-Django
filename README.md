@@ -8,7 +8,7 @@ The idea was straightforward: a place where users can browse events, register, a
 
 ### Dashboard
 
-The main page after login. Shows all upcoming events as cards with date, location, price and available spots. There's a search bar at the top that filters results live as you type, and quick filter buttons for Today, This Week, and Free events. Below the event grid is a scrollable performer strip with links to their Wikipedia pages.
+The main page after login. Shows all upcoming events as cards with date, location, price and available spots. There's a search bar at the top that filters results live as you type, and quick filter buttons for Today, This Week, and Free events. Below the event grid is a scrollable performer strip with links to their respective Wikipedia pages.
 
 ![Dashboard](Screenshots/dashboard.png)
 
