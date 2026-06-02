@@ -1,43 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Event</title>
-    {% load static %}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'accounts/dashboard.css' %}" rel="stylesheet">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Dashboard</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-            </ul>
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block title %}Add Event | EventEcho{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'accounts/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+
+            <div style="margin-bottom:26px;" class="anim-fade-up">
+                <h2 style="font-weight:900;font-size:1.6rem;color:var(--ink);">Add New Event</h2>
+            </div>
+
+            <div class="anim-fade-up d1" style="background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-lg);padding:32px 34px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="field-wrap">
+                                <label class="field-label">Event Name</label>
+                                {{ form.name|add_class:"field-input" }}
+                                {% for e in form.name.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-wrap">
+                                <label class="field-label">Location</label>
+                                {{ form.location|add_class:"field-input" }}
+                                {% for e in form.location.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="field-wrap">
+                                <label class="field-label">Description</label>
+                                {{ form.description|add_class:"field-input" }}
+                                {% for e in form.description.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field-wrap">
+                                <label class="field-label">Date &amp; Time</label>
+                                {{ form.date|add_class:"field-input" }}
+                                {% for e in form.date.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="field-wrap">
+                                <label class="field-label">Price ($)</label>
+                                {{ form.price|add_class:"field-input" }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="field-wrap">
+                                <label class="field-label">Capacity</label>
+                                {{ form.capacity|add_class:"field-input" }}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="field-wrap">
+                                <label class="field-label">Tags <span style="color:var(--ink-3);font-weight:400;">(e.g. music, outdoor, free)</span></label>
+                                {{ form.tags|add_class:"field-input" }}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="field-wrap">
+                                <label class="field-label">Event Image</label>
+                                {{ form.image|add_class:"field-input" }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn-primary px-5">Save Event</button>
+                        <a href="{% url 'dashboard' %}" class="btn-outline">Cancel</a>
+                    </div>
+                </form>
+            </div>
+
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <h2>Add New Event</h2>
-        <form method="post" action="{% url 'add_event' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Add Event</button>
-        </form>
     </div>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <script src="{% static 'accounts/script.js' %}"></script>
-</body>
-</html>
+</div>
+{% endblock %}

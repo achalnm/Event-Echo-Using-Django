@@ -1,263 +1,270 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventEcho</title>
-    {% load static %}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'accounts/dashboard.css' %}" rel="stylesheet">
-    <style>
-        .event-box {
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">EventEcho</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-                <!-- New About Us button -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#about-us">About Us</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends 'base.html' %}
+{% load static %}
 
-    <!-- Video Section -->
-    <div class="video-container">
-        <video autoplay loop muted playsinline class="video-background">
-            <source src="{% static 'accounts/vid.mp4' %}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+{% block title %}Dashboard | EventEcho{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'accounts/css/cards.css' %}" rel="stylesheet">
+<link href="{% static 'accounts/css/dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="hero-banner">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <span class="label-tag">Welcome back</span>
+                <h2 style="font-size:1.8rem;font-weight:900;margin-bottom:6px;letter-spacing:-0.3px;">{{ user.username }}</h2>
+                <p style="color:var(--ink-2);margin:0;font-size:0.88rem;">
+                    {{ events|length }} event{{ events|length|pluralize }} available
+                    &nbsp;&bull;&nbsp;
+                    {{ my_registrations|length }} registered
+                </p>
+            </div>
+            <div class="col-md-5 text-md-end mt-3 mt-md-0">
+                <a href="{% url 'add_event' %}" class="btn-primary" style="font-size:0.86rem;padding:9px 22px;">
+                    <i class="bi bi-plus-lg me-1"></i>Add Event
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <!-- Welcome Card -->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-user"></i> Welcome
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Hello, {{ user.username }}!</h4>
-                        <p class="card-text">Welcome to your dashboard. Here you can manage your account and view relevant information.</p>
-                    </div>
-                </div>
-                <!-- Notifications Card -->
-                <div class="card mt-3">
-                    <div class="card-header bg-info">
-                        <i class="fas fa-bell"></i> Notifications
-                    </div>
-                    <div class="card-body">
-                        {% if registered_events %}
-                            <ul class="list-group">
-                                {% for event in registered_events %}
-                                    <li class="list-group-item">{{ event.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>You have not registered for any events yet.</p>
-                        {% endif %}
-                    </div>
+    <div id="hero-carousel" class="carousel slide carousel-custom" data-bs-ride="carousel" data-bs-interval="3500" data-bs-pause="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'accounts/bgg.jpg' %}" class="d-block w-100" alt="Events">
+                <div class="carousel-caption d-none d-sm-block">
+                    <h5>EventEcho</h5>
+                    <p>Find events, register, get your QR ticket.</p>
                 </div>
             </div>
-            <!-- Events Card -->
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-success">
-                        <i class="fas fa-calendar-alt"></i> Upcoming Events
-                    </div>
-                    <div class="card-body">
-                        {% if events %}
-                            <div class="row">
-                                {% for event in events %}
-                                <div class="col-md-6 event-box">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>{{ event.name }}</h5>
-                                            <small>{{ event.date }}</small>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>{{ event.description }}</p>
-                                            <p>Price: ${{ event.price }}</p>
-                                            {% if event.image %}
-                                                <img src="{{ event.image.url }}" alt="{{ event.name }}" style="width: 100%; height: auto;">
-                                            {% endif %}
-                                            <a href="{% url 'event_detail' event.id %}" class="btn btn-primary mt-2">View Details</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <p>No upcoming events scheduled.</p>
-                        {% endif %}
-                    </div>
+            <div class="carousel-item">
+                <img src="{% static 'accounts/bgg2.jpg' %}" class="d-block w-100" alt="Events">
+                <div class="carousel-caption d-none d-sm-block">
+                    <h5>Secure Your Spot</h5>
+                    <p>Limited seats, register before they run out.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'accounts/image7.jpg' %}" class="d-block w-100" alt="Events">
+                <div class="carousel-caption d-none d-sm-block">
+                    <h5>More events</h5>
+                    <p>Browse all upcoming events.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'accounts/image2.jpg' %}" class="d-block w-100" alt="Events">
+                <div class="carousel-caption d-none d-sm-block">
+                    <h5>Concerts, comedy, workshops and more</h5>
+                    <p>New events added regularly.</p>
                 </div>
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#hero-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#hero-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="3"></button>
+        </div>
+    </div>
 
-        <!-- Reviews Section -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="reviews-container">
-                    <div class="review-wrapper">
-                        <div class="review-cards">
-                            <!-- Review 1 -->
-                            <a href="https://en.wikipedia.org/wiki/Justin_Bieber" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review1.jpg' %}" alt="Reviewer 1" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Justin Bieber</div>
-                                        <p class="review-text">Singer/Musician</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 2 -->
-                            <a href="https://en.wikipedia.org/wiki/Gangavathi_Pranesh" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review9.jpg' %}" alt="Reviewer 2" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Gangavathi Pranesh</div>
-                                        <p class="review-text">Comedian</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 3 -->
-                            <a href="https://en.wikipedia.org/wiki/Arijit_Singh" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review3.jpg' %}" alt="Reviewer 3" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Arijith Singh</div>
-                                        <p class="review-text">Singer/Performer</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 4 -->
-                            <a href="https://en.wikipedia.org/wiki/Sonu_Nigam" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review4.jpg' %}" alt="Reviewer 4" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Sonu Nigam</div>
-                                        <p class="review-text">Singer/Performer</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 5 -->
-                            <a href="https://en.wikipedia.org/wiki/Rajesh_Krishnan" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review5.jpg' %}" alt="Reviewer 5" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Rajesh Krishnan</div>
-                                        <p class="review-text">Singer</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 6 -->
-                            <a href="https://en.wikipedia.org/wiki/Dua_Lipa" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review6.jpg' %}" alt="Reviewer 6" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Dua Lipa</div>
-                                        <p class="review-text">Singer</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 7 -->
-                            <a href="https://en.wikipedia.org/wiki/Deadpool" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review7.jpg' %}" alt="Reviewer 7" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Deadpool</div>
-                                        <p class="review-text">Marvel Jesus</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- Review 8 -->
-                            <a href="https://en.wikipedia.org/wiki/Birju_Maharaj" target="_blank" class="review-link">
-                                <div class="review-card">
-                                    <img src="{% static 'accounts/review8.jpg' %}" alt="Reviewer 8" class="review-img">
-                                    <div class="review-content">
-                                        <div class="review-name">Pandit Birju Maharaj</div>
-                                        <p class="review-text">Dancer, Composer</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+    <div class="search-bar-wrap">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6">
+                <div class="search-inner">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="search-input" class="search-field" placeholder="Search by name or location...">
                 </div>
             </div>
-        </div>
-
-        <!-- Image Carousel -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="image-carousel">
-                    <div class="carousel-container">
-                        <img src="{% static 'accounts/image7.jpg' %}" alt="Image 1">
-                        <img src="{% static 'accounts/image2.jpg' %}" alt="Image 2">
-                        <img src="{% static 'accounts/image3.jpg' %}" alt="Image 3">
-                        <img src="{% static 'accounts/image4.jpg' %}" alt="Image 4">
-                        <img src="{% static 'accounts/image5.jpg' %}" alt="Image 5">
-                        <img src="{% static 'accounts/image6.jpg' %}" alt="Image 6">
-                        <img src="{% static 'accounts/image8.jpg' %}" alt="Image 7">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Us Section -->
-        <div class="row mt-5" id="about-us">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white">
-                        <i class="fas fa-info-circle"></i> About Us
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">About EventEcho</h5>
-                        <p class="card-text">
-                            EventEcho is your go-to platform for discovering and registering for the most exciting events around you. Whether you're looking for concerts, workshops, or community meetups, EventEcho has it all. Join our community and never miss out on an event again!
-                        </p>
-                        <h5 class="card-title">Contact Us</h5>
-                        <p class="card-text">
-                            Have questions or need support? Reach out to our team at support@eventecho.com or call us at +123456789.
-                        </p>
-                    </div>
+            <div class="col-md-6">
+                <div class="d-flex gap-2 flex-wrap">
+                    <button class="filter-pill active" data-filter="all">All</button>
+                    <button class="filter-pill" data-filter="today">Today</button>
+                    <button class="filter-pill" data-filter="week">This Week</button>
+                    <button class="filter-pill" data-filter="free">Free</button>
                 </div>
             </div>
         </div>
     </div>
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; JIT | All rights reserved | For more information contact +919035283996 | EventEcho@gmail.com</p>
-    <div class="social-icons">
-        <a href="https://www.instagram.com" class="social-icon" target="_blank">
-            <img src="{% static 'accounts/LOG1.png' %}" alt="Instagram">
-        </a>
-        <a href="https://www.linkedin.com" class="social-icon" target="_blank">
-            <img src="{% static 'accounts/LOG2.png' %}" alt="LinkedIn">
-        </a>
-        <a href="https://mail.google.com" class="social-icon" target="_blank">
-            <img src="{% static 'accounts/LOG3.png' %}" alt="Facebook">
-        </a>
+
+    <h5 class="section-h">Upcoming Events</h5>
+    <div class="row" id="events-container">
+        {% for event in events %}
+        <div class="col-md-4 mb-4">
+            {% include 'partials/_event_card.html' %}
+        </div>
+        {% empty %}
+        <div class="col-12" style="padding:36px 0;">
+            <p style="color:var(--ink-3);">No events yet.</p>
+        </div>
+        {% endfor %}
     </div>
-</footer>
-    <!-- Bootstrap JS and other libraries -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'accounts/script.js' %}"></script>
-</body>
-</html>
+
+    {% if my_registrations %}
+    <span class="label-tag" style="margin-top:44px;display:block;">Your tickets</span>
+    <h5 class="section-h">My Registered Events</h5>
+    <div class="row">
+        {% for reg in my_registrations %}
+        <div class="col-md-4 mb-4">
+            <div class="event-card hover-rise" style="border-color:var(--green-bd);">
+                {% if reg.event.image %}
+                    <img src="{{ reg.event.image.url }}" class="event-card-img" alt="{{ reg.event.name }}">
+                {% else %}
+                    <div class="event-card-placeholder"><i class="bi bi-calendar-event"></i></div>
+                {% endif %}
+                <div class="event-card-body">
+                    <span class="badge-reg" style="margin-bottom:10px;">Registered</span>
+                    <div class="event-card-title">{{ reg.event.name }}</div>
+                    <div class="event-meta"><i class="bi bi-calendar3"></i>{{ reg.event.date|date:"M d, Y" }}</div>
+                    <div class="event-meta"><i class="bi bi-geo-alt"></i>{{ reg.event.location }}</div>
+                    <a href="{% url 'ticket' reg.id %}" class="card-btn card-btn-success" style="margin-top:auto;" onclick="event.stopPropagation();">
+                        <i class="bi bi-qr-code me-1"></i>View Ticket
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if recommended %}
+    <h5 class="section-h" style="margin-top:44px;">More events</h5>
+    <div class="row">
+        {% for event in recommended %}
+        <div class="col-md-4 mb-4">
+            <div class="event-card hover-rise"
+                 style="border-color:var(--amber-bd);"
+                 data-id="{{ event.id }}"
+                 data-name="{{ event.name }}"
+                 data-date="{{ event.date|date:'F d, Y' }}"
+                 data-time="{{ event.date|date:'g:i A' }}"
+                 data-location="{{ event.location }}"
+                 data-description="{{ event.description }}"
+                 data-price="{{ event.price }}"
+                 data-price-zero="{% if event.price == 0 %}1{% else %}0{% endif %}"
+                 data-spots="{{ event.spots_remaining }}"
+                 data-full="{% if event.is_full %}1{% else %}0{% endif %}"
+                 data-image="{% if event.image %}{{ event.image.url }}{% endif %}"
+                 data-register-url="{% url 'register_for_event' event.id %}"
+                 data-registered="0">
+                {% if event.image %}
+                    <img src="{{ event.image.url }}" class="event-card-img" alt="{{ event.name }}">
+                {% else %}
+                    <div class="event-card-placeholder"><i class="bi bi-calendar-event"></i></div>
+                {% endif %}
+                <div class="event-card-body">
+                    <span class="badge-rec" style="margin-bottom:10px;">Recommended</span>
+                    <div class="event-card-title">{{ event.name }}</div>
+                    <div class="event-meta"><i class="bi bi-calendar3"></i>{{ event.date|date:"M d, Y" }}</div>
+                    <div class="event-meta"><i class="bi bi-geo-alt"></i>{{ event.location }}</div>
+                    <div class="badges">
+                        {% if event.price == 0 %}<span class="badge-free">Free</span>{% else %}<span class="badge-price">${{ event.price }}</span>{% endif %}
+                        {% if event.is_full %}<span class="badge-full">Full</span>{% else %}<span class="badge-spots">{{ event.spots_remaining }} left</span>{% endif %}
+                    </div>
+                    <p class="event-desc">{{ event.description|truncatewords:11 }}</p>
+                    <div class="card-hint"><i class="bi bi-arrow-up-right-circle"></i>Click to view details</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div style="margin-top:48px;">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+                <h5 class="section-h" style="margin-bottom:0;">Performers</h5>
+            </div>
+            <div class="d-flex gap-2">
+                <button id="perf-prev" class="scroll-btn"><i class="bi bi-chevron-left"></i></button>
+                <button id="perf-next" class="scroll-btn"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="performer-strip" id="performer-strip">
+            <a href="https://en.wikipedia.org/wiki/Justin_Bieber" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review1.jpg' %}" alt="Justin Bieber" class="performer-img">
+                <div class="performer-name">Justin Bieber</div>
+                <div class="performer-role">Singer</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Gangavathi_Pranesh" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review9.jpg' %}" alt="Gangavathi Pranesh" class="performer-img">
+                <div class="performer-name">G. Pranesh</div>
+                <div class="performer-role">Comedian</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Arijit_Singh" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review3.jpg' %}" alt="Arijit Singh" class="performer-img">
+                <div class="performer-name">Arijit Singh</div>
+                <div class="performer-role">Singer</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Sonu_Nigam" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review4.jpg' %}" alt="Sonu Nigam" class="performer-img">
+                <div class="performer-name">Sonu Nigam</div>
+                <div class="performer-role">Singer</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Rajesh_Krishnan" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review5.jpg' %}" alt="Rajesh Krishnan" class="performer-img">
+                <div class="performer-name">Rajesh Krishnan</div>
+                <div class="performer-role">Singer</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Dua_Lipa" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review6.jpg' %}" alt="Dua Lipa" class="performer-img">
+                <div class="performer-name">Dua Lipa</div>
+                <div class="performer-role">Singer</div>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Birju_Maharaj" target="_blank" class="performer-card">
+                <img src="{% static 'accounts/review8.jpg' %}" alt="Birju Maharaj" class="performer-img">
+                <div class="performer-name">Birju Maharaj</div>
+                <div class="performer-role">Dancer</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="about-box" id="about-us">
+        <h6 style="font-weight:700;margin-bottom:8px;">About EventEcho</h6>
+        <p style="color:var(--ink-2);font-size:0.86rem;line-height:1.65;margin-bottom:6px;">
+            Find concerts, comedy shows, workshops and meetups. Register and get your ticket.
+        </p>
+        <p style="color:var(--ink-3);font-size:0.78rem;margin:0;">support@eventecho.com &nbsp;&bull;&nbsp; +123456789</p>
+    </div>
+
+</div>
+
+<div class="modal fade event-modal" id="eventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-name" style="font-weight:800;font-size:1.05rem;letter-spacing:-0.1px;"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-img-wrap" style="border-radius:var(--r);overflow:hidden;margin-bottom:16px;display:none;">
+                    <img id="modal-img" src="" alt="" style="width:100%;height:190px;object-fit:cover;display:block;">
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;">
+                    <span style="display:flex;align-items:center;gap:5px;font-size:0.83rem;color:var(--ink-2);"><i class="bi bi-calendar3" style="font-size:0.75rem;"></i><span id="modal-date"></span></span>
+                    <span style="display:flex;align-items:center;gap:5px;font-size:0.83rem;color:var(--ink-2);"><i class="bi bi-clock" style="font-size:0.75rem;"></i><span id="modal-time"></span></span>
+                    <span style="display:flex;align-items:center;gap:5px;font-size:0.83rem;color:var(--ink-2);"><i class="bi bi-geo-alt" style="font-size:0.75rem;"></i><span id="modal-location"></span></span>
+                </div>
+                <div id="modal-badges" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;"></div>
+                <p id="modal-desc" style="font-size:0.86rem;color:var(--ink-2);line-height:1.65;margin:0;"></p>
+            </div>
+            <div class="modal-footer" style="justify-content:space-between;">
+                <button type="button" class="btn-outline" style="padding:8px 20px;font-size:0.84rem;" data-bs-dismiss="modal">Close</button>
+                <a id="modal-register-btn" href="#" class="btn-primary" style="padding:8px 22px;font-size:0.84rem;">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'accounts/js/search.js' %}"></script>
+{% endblock %}

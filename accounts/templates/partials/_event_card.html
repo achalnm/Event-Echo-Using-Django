@@ -1,0 +1,33 @@
+<div class="event-card hover-rise"
+     data-id="{{ event.id }}"
+     data-name="{{ event.name }}"
+     data-date="{{ event.date|date:'F d, Y' }}"
+     data-time="{{ event.date|date:'g:i A' }}"
+     data-location="{{ event.location }}"
+     data-description="{{ event.description }}"
+     data-price="{{ event.price }}"
+     data-price-zero="{% if event.price == 0 %}1{% else %}0{% endif %}"
+     data-spots="{{ event.spots_remaining }}"
+     data-full="{% if event.is_full %}1{% else %}0{% endif %}"
+     data-image="{% if event.image %}{{ event.image.url }}{% endif %}"
+     data-register-url="{% url 'register_for_event' event.id %}"
+     data-registered="{% if event.id in registered_ids %}1{% else %}0{% endif %}">
+    {% if event.image %}
+        <img src="{{ event.image.url }}" class="event-card-img" alt="{{ event.name }}">
+    {% else %}
+        <div class="event-card-placeholder">
+            <i class="bi bi-calendar-event"></i>
+        </div>
+    {% endif %}
+    <div class="event-card-body">
+        <div class="event-card-title">{{ event.name }}</div>
+        <div class="event-meta"><i class="bi bi-calendar3"></i>{{ event.date|date:"M d, Y" }}</div>
+        <div class="event-meta"><i class="bi bi-geo-alt"></i>{{ event.location }}</div>
+        <div class="badges">
+            {% if event.price == 0 %}<span class="badge-free">Free</span>{% else %}<span class="badge-price">${{ event.price }}</span>{% endif %}
+            {% if event.is_full %}<span class="badge-full">Full</span>{% else %}<span class="badge-spots">{{ event.spots_remaining }} left</span>{% endif %}
+        </div>
+        <p class="event-desc">{{ event.description|truncatewords:12 }}</p>
+        <div class="card-hint"><i class="bi bi-arrow-up-right-circle"></i>Click to view details</div>
+    </div>
+</div>
