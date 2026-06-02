@@ -1,6 +1,6 @@
 # EventEcho
 
-EventEcho is an event management web app I built during my third year BE at Jyothy Institute of Technology (VTU, Bangalore) as a mini project. It started as a basic Django CRUD app and I kept adding to it over time. It now has QR code ticketing, seat capacity tracking, tag-based event recommendations, and a live search and filter on the dashboard.
+EventEcho is an event management web app my team and I built during our third year BE at Jyothy Institute of Technology (VTU, Bangalore) as a mini project. It started as a basic Django CRUD app and I kept adding to it over time. It now has QR code ticketing, seat capacity tracking, tag-based event recommendations, and a live search and filter on the dashboard.
 
 The idea was straightforward: a place where users can browse events, register, and get a ticket they can actually print or show at the door. Organisers can post events with a seat limit, price, and tags. When a seat fills up it locks out new registrations automatically.
 
