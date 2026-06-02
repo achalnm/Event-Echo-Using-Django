@@ -1,4 +1,4 @@
-# EventEcho — Event Management Platform
+# EventEcho: Event Management Platform
 
 Originally built as a third year mini project for the Bachelor of Engineering in Computer Science at Jyothy Institute of Technology, VTU, Bangalore. Later extended with AI-powered recommendations, QR code ticketing, seat capacity management, and real-time search.
 
